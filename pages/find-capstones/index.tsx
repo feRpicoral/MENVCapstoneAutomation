@@ -1,6 +1,6 @@
 import React from 'react'
 // import Grid from '@material-ui/core/Grid'
-import { test, test_solver } from '../../lib/find-capstones'
+import { test, test_solver_random_model } from '../../lib/find-capstones'
 // import UserCard from '../../components/card'
 
 export default function Page({solution}){
@@ -13,7 +13,7 @@ export default function Page({solution}){
 
 export async function getServerSideProps(context) {
   
-  const solution = await test_solver()
+  const solution = await test_solver_random_model()
   // console.log(solution)
 
   return {
