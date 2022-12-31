@@ -150,7 +150,9 @@ function model_from_preferences(student_preferences, num_students, num_capstones
 
 }
 
-function find_distribution(results, student_preferences){
+export function find_distribution(results, student_preferences){
+
+
 	var result_pref = {"pref-1":0, "pref-2":0, "pref-3":0, "pref-4":0, "pref-5":0, "non-pref":0}
 	for (const [key, value] of Object.entries(results)) {
 	  console.log(`${key}: ${value}`);
@@ -216,14 +218,14 @@ export async function test_solver_from_file(){
 }
 
 export async function test_solver_from_file_model(){
-	var content = fs.readFileSync("public/example-model-2.json", {encoding: 'utf-8'})
+	var content = fs.readFileSync("data/examples/example-model.json", {encoding: 'utf-8'})
 	var data = JSON.parse(content)
 	var model = data["model"]
 	var num_students = data["num_students"]
 	var num_capstones = data["num_capstones"]
 
 
-	var content2 = fs.readFileSync("public/example-preferences.json", {encoding: 'utf-8'})
+	var content2 = fs.readFileSync("data/examples/example-preferences.json", {encoding: 'utf-8'})
 	var data2 = JSON.parse(content2)
 	var student_preferences = data2["student_preferences"]
 	// var model = model_from_preferences(student_preferences, num_students, num_capstones);
