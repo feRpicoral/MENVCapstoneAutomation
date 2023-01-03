@@ -101,10 +101,16 @@ export function ResultsComponent(props){
         <h2> Dropped Capstones </h2>
 
         <div>
-          {parsed_results.dropped_capstones ? (
+          {parsed_results.dropped_capstones.length == 0 ? (
             <p>None</p>
           ) : (
-            <p>Something </p>
+              <div>
+              {parsed_results.dropped_capstones.map((item, ind) => (
+                  <div key = {ind}>
+                    {`${item}`}
+                  </div>
+              ))}
+              </div>
           )}
         </div>
 
