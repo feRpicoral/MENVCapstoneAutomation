@@ -46,6 +46,7 @@
 
 .requirements_input_container{
     margin: 10px;
+    display: flex;
 }
 
 .capstone_data_margin{
@@ -84,4 +85,34 @@
     border-style: solid;
     border-color: #CCC;
     font-size: 16pt;
+}
+
+.x_button{
+    padding: 8px;
+    height: 18px;
+    width: 18px;
+}
+
+.x_button_small{
+    padding: 6px;
+    height: 12px;
+    width: 12px;
+}
+
+.capstone_skills_list_container{
+    width: 800px;
+    padding: 10px;
+    margin-right: 20px;
+    position: relative;
+}
+
+.capstone_skills_list{
+    background-color: #DDD;
+    border-radius: 10px;
+    padding: 5px;
+    display: flex;
+    flex-wrap: wrap;
+    overflow-y: auto;
+    position: absolute;
+    width: 100%;
 }
