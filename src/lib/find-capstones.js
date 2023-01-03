@@ -76,7 +76,8 @@ function init_model(num_students, num_capstones, capstone_sizes = undefined){
 		model["constraints"][`capstone-${c}`] = {"min":capstone_sizes[c][0], "max":capstone_sizes[c][1]};
 
 		// This binary variable decides if a capstone will be dropped(1) or not(0).
-		model["variables"][`capstone-${c}-dropped`] = {`capstone-${c}`:capstone_sizes[c][1]}
+		model["variables"][`capstone-${c}-dropped`] = {}
+		model["variables"][`capstone-${c}-dropped`][`capstone-${c}`] = capstone_sizes[c][1]
 		model["constraints"][`capstone-${c}-dropped`] = {"min":0, "max":1};
 
 		// dropping variable is an integer.
@@ -168,9 +169,6 @@ function model_from_preferences(student_preferences, num_students, num_capstones
 }
 
 
-function model_from_prefs_sizes(student_preferences, num_students, num_capstones){
-
-}
 
 
 export function find_distribution(results, student_preferences){
@@ -179,17 +177,18 @@ export function find_distribution(results, student_preferences){
 	var result_pref = {"pref-1":0, "pref-2":0, "pref-3":0, "pref-4":0, "pref-5":0, "non-pref":0}
 	for (const [key, value] of Object.entries(results)) {
 	  // console.log(`${key}: ${value}`);
-	  if (["feasible","result","bounded","isIntegral" ].indexOf(key) == -1){
-	  	var s = key.split("student-")[1].split("-")[0];
-	  	var c = key.split("capstone-")[1];
-	  	var preference = student_preferences[s][c];
-	  	if (preference == undefined){
-	  		result_pref["non-pref"] +=1;
+	  if (["feasible","result","bounded","isIntegral"].indexOf(key) == -1){
+	  	if(key.indexOf("dropped") == -1){
+		  	var s = key.split("student-")[1].split("-")[0];
+		  	var c = key.split("capstone-")[1];
+		  	var preference = student_preferences[s][c];
+		  	if (preference == undefined){
+		  		result_pref["non-pref"] +=1;
+		  	}
+		  	else{
+		  		result_pref[`pref-${preference}`]+=1;
+		  	}
 	  	}
-	  	else{
-	  		result_pref[`pref-${preference}`]+=1;
-	  	}
-	  	
 
 	  }
 
@@ -240,7 +239,7 @@ export async function test_solver_from_file(){
 
 }
 
-export async function test_solver_from_file_model(){
+export async function test_example1(){
 	var content = fs.readFileSync("data/examples/example-model.json", {encoding: 'utf-8'})
 	var data = JSON.parse(content)
 	var model = data["model"]
@@ -266,7 +265,7 @@ export async function test_solver_from_file_model(){
 }
 
 
-export async function test_solver_preferences(){
+export async function test_example2(){
 	var content = fs.readFileSync("data/examples/example2-preferences.json", {encoding: 'utf-8'})
 	var data = JSON.parse(content)
 	var student_preferences = data["student_preferences"]
@@ -277,8 +276,10 @@ export async function test_solver_preferences(){
 	var content2 = fs.readFileSync("data/examples/example2-capstone-sizes.json", {encoding: 'utf-8'})
 	var capstone_sizes = JSON.parse(content2)
 
-	console.log(JSON.stringify(model))
+	var model = init_model(num_students, num_capstones, capstone_sizes)
+	model = set_model_variables(model, student_preferences, num_students, num_capstones)
 
+	fs.writeFileSync("data/examples/example2-model.json", JSON.stringify(model),  {encoding: 'utf-8'})
 	var results = await solver.Solve(model);
 	var result_pref = find_distribution(results, student_preferences)
 
