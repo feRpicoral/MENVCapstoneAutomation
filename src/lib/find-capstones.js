@@ -74,6 +74,15 @@ function init_model(num_students, num_capstones, capstone_sizes = undefined){
 	for (var c = 1; c <= num_capstones; c++){
 		// constraint: capstone should have 3-4 students. Between min and max
 		model["constraints"][`capstone-${c}`] = {"min":capstone_sizes[c][0], "max":capstone_sizes[c][1]};
+
+		// This binary variable decides if a capstone will be dropped(1) or not(0).
+		model["variables"][`capstone-${c}-dropped`] = {`capstone-${c}`:capstone_sizes[c][1]}
+		model["constraints"][`capstone-${c}-dropped`] = {"min":0, "max":1};
+
+		// dropping variable is an integer.
+		model["ints"][`capstone-${c}-dropped`] = 1;
+
+
 	}
 
 	// set constraints
