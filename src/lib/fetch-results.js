@@ -40,6 +40,22 @@ export function get_example_results(){
 
 }
 
+export function get_example2_results(){
+	var r = fs.readFileSync("data/examples/example2-results.json", {encoding: 'utf-8'})
+	r = JSON.parse(r)
+	var p = fs.readFileSync("data/examples/example2-preferences.json", {encoding: 'utf-8'})
+	p = JSON.parse(p)
+	var s = fs.readFileSync("data/examples/example2-student-mapping.json", {encoding: 'utf-8'})
+	s = JSON.parse(s)
+	var c = fs.readFileSync("data/examples/example2-capstone-mapping.json", {encoding: 'utf-8'})
+	c = JSON.parse(c)
+
+	
+	var results = {"student_preferences": p, "results": r, "student_mapping": s, "capstone_mapping": c}
+
+	return parse_results(r, c, s, p)
+
+}
 
 function get_logical_results(results, student_mapping , capstone_mapping){
     var logical_result = {};
@@ -85,14 +101,14 @@ function dropped_capstones(results, capstone_mapping){
   for (const [key, value] of Object.entries(results)) {
       // console.log(`${key}: ${value}`);
     if(key.indexOf("dropped") !== -1){
-      var c = s.split("-dropped")[0].split("-")[1]
+      var c = key.split("-dropped")[0].split("-")[1]
       dropped.push(capstone_mapping[c])
     }
   }
+  console.log(dropped)
+  console.log(dropped.length)
 
-  if (dropped.length == 0)
-    return "none"
-  else
-    return dropped
+
+	return dropped
 
 }
