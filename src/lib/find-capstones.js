@@ -50,7 +50,7 @@ function getCost(preference_number){
 // }
 
 
-function init_model(num_students, num_capstones){
+function init_model(num_students, num_capstones, capstone_sizes = undefined){
 	var model = {};
 	model["optimize"] = "cost";
 	model["opType"] = "min";
@@ -58,14 +58,22 @@ function init_model(num_students, num_capstones){
 	model["ints"] = {};
 	model["variables"] = {};
 
+
+	if(capstone_sizes === undefined){
+		capstone_sizes = {}
+		for(var c = 1;c <= num_capstones; c++){
+			capstone_sizes[c] = [3,4]
+		}
+	}
+
 	for (var s = 1; s <= num_students; s++) {
 		// student must be assigned to exactly one capstone.
 		model["constraints"][`student-${s}`] = {"min":1, "max": 1};
 	}
 
 	for (var c = 1; c <= num_capstones; c++){
-		// constraint: capstone should have 3-4 students
-		model["constraints"][`capstone-${c}`] = {"min":3, "max":4};
+		// constraint: capstone should have 3-4 students. Between min and max
+		model["constraints"][`capstone-${c}`] = {"min":capstone_sizes[c][0], "max":capstone_sizes[c][1]};
 	}
 
 	// set constraints
@@ -150,12 +158,18 @@ function model_from_preferences(student_preferences, num_students, num_capstones
 
 }
 
+
+function model_from_prefs_sizes(student_preferences, num_students, num_capstones){
+
+}
+
+
 export function find_distribution(results, student_preferences){
 
 
 	var result_pref = {"pref-1":0, "pref-2":0, "pref-3":0, "pref-4":0, "pref-5":0, "non-pref":0}
 	for (const [key, value] of Object.entries(results)) {
-	  console.log(`${key}: ${value}`);
+	  // console.log(`${key}: ${value}`);
 	  if (["feasible","result","bounded","isIntegral" ].indexOf(key) == -1){
 	  	var s = key.split("student-")[1].split("-")[0];
 	  	var c = key.split("capstone-")[1];
@@ -229,6 +243,30 @@ export async function test_solver_from_file_model(){
 	var data2 = JSON.parse(content2)
 	var student_preferences = data2["student_preferences"]
 	// var model = model_from_preferences(student_preferences, num_students, num_capstones);
+
+	console.log(JSON.stringify(model))
+
+	var results = await solver.Solve(model);
+	var result_pref = find_distribution(results, student_preferences)
+
+	console.log(results);
+	console.log(result_pref);
+
+	return JSON.stringify(results);
+
+}
+
+
+export async function test_solver_preferences(){
+	var content = fs.readFileSync("data/examples/example2-preferences.json", {encoding: 'utf-8'})
+	var data = JSON.parse(content)
+	var student_preferences = data["student_preferences"]
+	var num_students = data["num_students"]
+	var num_capstones = data["num_capstones"]
+
+
+	var content2 = fs.readFileSync("data/examples/example2-capstone-sizes.json", {encoding: 'utf-8'})
+	var capstone_sizes = JSON.parse(content2)
 
 	console.log(JSON.stringify(model))
 
