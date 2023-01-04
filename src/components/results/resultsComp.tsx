@@ -17,7 +17,10 @@ import { DataGrid, GridColDef, GridValueGetterParams, GridToolbarContainer, Grid
 function CustomToolbar() {
   return (
     <GridToolbarContainer>
-      <GridToolbarExport printOptions={{ disableToolbarButton: true }}/>
+      <GridToolbarExport 
+        printOptions={{ disableToolbarButton: true }}   
+        csvOptions={{fileName: 'results'}}
+        />
     </GridToolbarContainer>
   );
 }
