@@ -1,11 +1,12 @@
 import {useState} from "react";
-import {Button, Grid, IconButton, Stack, Typography} from "@mui/material";
+import {Button, Stack} from "@mui/material";
 import {CapstoneProject} from "../lib/capstoneData";
 import CapstoneCard from "../components/CapstoneCard";
 import {useLocalStorage} from "../lib/localStorage";
 import {Box} from "@mui/system";
 import {CapstoneEditor} from "../components/CapstoneEditor";
-import {Add, ArrowForward, Home} from "@mui/icons-material";
+import {Add} from "@mui/icons-material";
+import {TitleBar} from "../components/TitleBar";
 
 export default function Capstones() {
     const [projects, setProjects] = useLocalStorage<CapstoneProject[]>('menv-capstone-creation', [])
@@ -50,24 +51,10 @@ export default function Capstones() {
     // sign in -> validate form ID (create or select) -> add projects -> update form -> gather responses -> run algorithm -> display results
     return (
         <>
-            <Box m={5}>
-                <Grid container spacing={2} alignItems='center' justifyItems='center'>
-                    <Grid item>
-                        <IconButton href={"/"}>
-                            <Home sx={{color: "primary.main"}}/>
-                        </IconButton>
-                    </Grid>
-                    <Grid item>
-                        <Typography variant='h4'>Capstone Creation</Typography>
-                        <Typography variant='subtitle1'>Enter capstone information, then continue to the next step to
-                            set up the Google Form.</Typography>
-                    </Grid>
-                    <Grid item>
-                        <Button href={"/form"} endIcon={<ArrowForward/>} variant='contained' color='primary' size='large'
-                                sx={{float: 'right'}}>Continue</Button>
-                    </Grid>
-                </Grid>
-            </Box>
+            <TitleBar title='Capstone Creation' homeButton={true}
+                      subtitle='Enter capstone information, then continue to the next step to set up the Google Form.'
+                      forwardButton={{ text: 'Continue', href: '/form' }}
+            />
             <Box m={5}>
                 <Stack spacing={2}>
                     {projects ? projects.map(p => (

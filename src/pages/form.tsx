@@ -1,54 +1,24 @@
 import {useLocalStorage} from "../lib/localStorage";
 import {CapstoneProject} from "../lib/capstoneData";
-import useDrivePicker from "react-google-drive-picker";
 import {useState} from "react";
 import {batchUpdate, create} from "../lib/googleFormsApi";
 import {Option, Request} from "../lib/googleFormsInterface"
-import Script from "next/script";
-import {Box, Button, CircularProgress, Grid, Stack, TextField, Typography} from "@mui/material";
-import TokenClient = google.accounts.oauth2.TokenClient;
-import {ArrowBack} from "@mui/icons-material";
+import {Box, Button, CircularProgress, Stack, TextField, Typography} from "@mui/material";
+import {useGlobalState} from "../components/GlobalContextProvider";
+import {TOKEN_INVALID} from "../lib/constants";
+import {LoginPrompt} from "../components/LoginPrompt";
+import {TitleBar} from "../components/TitleBar";
 
-export async function getServerSideProps(context) {
-    return {
-        props: {
-            CLIENT_ID: process.env.MENV_CLIENT_ID,
-            API_KEY: process.env.MENV_API_KEY
-        }
-    }
-}
-
-export default function Form({CLIENT_ID}) {
-    const TOKEN_INVALID = 'token_invalid'
-
+export default function Form() {
     const [projects] = useLocalStorage<CapstoneProject[]>('menv-capstone-creation', [])
-    const [accessToken, setToken] = useLocalStorage('menv-google-accesstoken', TOKEN_INVALID)
-    const [tokenCreated, setTokenCreated] = useLocalStorage<>('menv-google-tokencreated', Date.UTC(1970, 0))
-
-    const [client, setClient] = useState<TokenClient>(null)
 
     const [formName, setFormName] = useState('')
     const [fileName, setFileName] = useState('')
-    const [formDescription, setFormDescription] = useState('')
 
     const [formWaiting, setFormWaiting] = useState(false)
     const [formSuccess, setFormSuccess] = useState(false)
 
-    // Make sure the token is still valid, i.e. created within the last hour
-    if(accessToken != TOKEN_INVALID && (Date.now() - tokenCreated) / 1000 > 3600) {
-        setToken(TOKEN_INVALID) // token is now invalid
-    }
-
-    function gsiLoad() {
-        setClient(google.accounts.oauth2.initTokenClient({
-            client_id: CLIENT_ID,
-            callback: tokenResponse => {
-                setToken(tokenResponse.access_token)
-                setTokenCreated(Date.now())
-            },
-            scope: 'https://www.googleapis.com/auth/forms https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/spreadsheets'
-        }))
-    }
+    const {accessToken} = useGlobalState()
 
     function collectSkills() {
         let skills = []
@@ -115,8 +85,8 @@ export default function Form({CLIENT_ID}) {
         }))
         setFormWaiting(true)
         create(accessToken, {
-            title: formName != '' ? formName : 'MENV Capstone Preferences',
-            documentTitle: fileName  != '' ? fileName : 'MENV Capstone Automation',
+            title: formName != '' ? formName : 'MENV Capstone Initial Preferences',
+            documentTitle: fileName  != '' ? fileName : 'MENV Capstone Initial Preferences',
         }).then(form => {
             batchUpdate(accessToken, form.formId!, {
                 requests: [...projectSelection.reverse(), skillCheck, ...descriptions],
@@ -134,40 +104,12 @@ export default function Form({CLIENT_ID}) {
 
     if (!projects) return null
 
-    const LoginPrompt = () => {
-        if (accessToken == TOKEN_INVALID) {
-            return (
-                <Stack>
-                    <Typography variant='subtitle1'>Please log into your Google account</Typography>
-                    <Button variant='contained' onClick={() => client.requestAccessToken()}>Log in</Button>
-                </Stack>
-            )
-        }
-        return (
-            <Button variant='contained' onClick={() => {
-                google.accounts.oauth2.revoke(accessToken, () => {})
-                setToken(TOKEN_INVALID)
-            }}>Log out</Button>
-        )
-    }
-
     return (
         <>
-            {/* Third party script used to obtain access token from Google for Forms/Drive/Sheets access */}
-            <Script defer src={"https://accounts.google.com/gsi/client"} onLoad={gsiLoad}></Script>
-            <Box m={5}>
-                <Grid container spacing={2} alignItems='center' justifyItems='center'>
-                    <Grid item>
-                        <Button href={"/capstones"} startIcon={<ArrowBack/>} variant='contained' color='primary'
-                                size='large'>Capstones</Button>
-                    </Grid>
-                    <Grid item>
-                        <Typography variant='h4'>Google Form</Typography>
-                        <Typography variant='subtitle1'>Log into Google and configure settings to generate the Google
-                            Form.</Typography>
-                    </Grid>
-                </Grid>
-            </Box>
+            <TitleBar title='Initial Form Creation' homeButton={true}
+                      subtitle='Set up and create a Google Form for initial project preferences'
+                      backButton={{ text: 'Projects Setup', href: 'capstones' }}
+            />
             <Box m={5}>
                 <Stack spacing={1}>
                     <LoginPrompt/>
@@ -178,8 +120,6 @@ export default function Form({CLIENT_ID}) {
                             <Typography variant='h6'>{projects.length} projects have been configured.</Typography>
                             <TextField label='Form name' helperText='This will be displayed at the top of the form' value={formName} onChange={e => setFormName(e.target.value)}></TextField>
                             <TextField label='File name' helperText='This will be the name of the file as seen in Google Drive' value={fileName} onChange={e => setFileName(e.target.value)}></TextField>
-                            <TextField label='Form description' value={formDescription} onChange={e => setFormDescription(e.target.value)}></TextField>
-                            <Typography variant='body1'>The following button will generate a form with the given projects and settings.</Typography>
                             <Typography variant='body1'>
                                 The beginning section of the form will list the projects
                                 with their descriptions. Following that section, students will be asked to check off
@@ -187,26 +127,17 @@ export default function Form({CLIENT_ID}) {
                                 the projects configured here. Finally, students will rank their project preferences.
                             </Typography>
                             <Typography variant='body1'>
-                                This tool will create and set up the form for you; you'll need to then open the form from your Google Drive.
+                                This tool will create and set up the form for you; you'll then need open the form from your Google Drive.
                                 You will have to do some final edits to the settings which are only available through
                                 that interface:
                             </Typography>
                             <ol>
-                                <li>
-                                    <Typography variant='body1'>On the project preferences question, click the three dots in the bottom right and enable "Limit to one response per column"</Typography>
-                                </li>
                                 <li>
                                     <Typography variant='body1'>In the form settings tab, under responses, enable "Limit to 1 response" and "Allow response editing"</Typography>
                                 </li>
                             </ol>
                             <Button size='large' variant='contained' color='primary' disabled={formWaiting || formSuccess} onClick={createForm}>{formWaiting ? <CircularProgress/> : 'Create form'}</Button>
                             {formSuccess && <Typography variant='body1'>Form was created successfully, check your Google Drive.</Typography>}
-                            {/*<Typography variant='body1'>*/}
-                            {/*    The project data is stored in your browser's local storage, so it could be lost.*/}
-                            {/*    Therefore, you can export the project data to a Google Sheet to serve as a backup or to*/}
-                            {/*    be easily shared.*/}
-                            {/*</Typography>*/}
-                            {/*<Button variant='contained' color='primary'>Export to Sheets</Button>*/}
                         </>
                     )}
                 </Stack>
