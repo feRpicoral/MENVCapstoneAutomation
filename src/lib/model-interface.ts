@@ -2,12 +2,12 @@
 // 	name: string
 // };
 
-interface SkillMap{
+export interface SkillMap{
 	[key: int]: string
 	// this object maps skill# to the skill name
 }
 
-interface Capstone{
+export interface Capstone{
 	// id: int,
 	name: string,
 	skills: int[], // array of skill#, as indicated by a SkillMap
@@ -15,18 +15,18 @@ interface Capstone{
 	maxStudents: int
 };
 
-interface CapstoneMap{
+export interface CapstoneMap{
 	[key: int]: Capstone 
 	// this object maps capstone# to a capstone
 }
 
-interface PrefMapping{
+export interface PrefMapping{
 	// maps the capstone# -> preference#
 	// capstone# is indicated by a CapstoneMap
 	[key: int]: int;
 }
 
-interface Student{
+export interface Student{
 	// id:int,
 	name: string,
 	skills: int[], // array of skill#, as indicated by a SkillMap
@@ -34,10 +34,10 @@ interface Student{
 
 };
 
-interface StudentMap{
+export interface StudentMap{
 	[key: int]: Student 
 }
 
 interface Result{
-	
+
 }
