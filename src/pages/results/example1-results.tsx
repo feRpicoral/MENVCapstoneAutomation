@@ -1,5 +1,5 @@
 import React from 'react'
-import { get_example_results } from '../../lib/fetch-results'
+import { get_example_results } from '../../lib/fetch-results.ts'
 import {ResultsComponent} from 'src/components/results/resultsComp'
 
 export default function Page({parsed_results}){
