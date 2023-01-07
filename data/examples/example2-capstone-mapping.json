@@ -1,32 +1,182 @@
 {
- "1": "Bootstrap + Monads = awesome",
- "2": "Lisp FTW",
- "3": "memcached with Autotune",
- "4": "Monads and chocolate",
- "5": "Bootstrap with Befunge",
- "6": "Haskell with chocolate",
- "7": "Monads FTW",
- "8": "git for zombies",
- "9": "Clojure FTW",
- "10": "Mashups in 140 characters",
- "11": "Lisp and bacon",
- "12": "Monads + jQuery = awesome",
- "13": "Haskell and Autotune",
- "14": "CSS3 + Lisp = awesome",
- "15": "CoffeeScript in 140 characters",
- "16": "Mashups and dubstep",
- "17": "git and Befunge",
- "18": "Lisp and Befunge",
- "19": "Bootstrap with dubstep",
- "20": "jQuery with Befunge",
- "21": "CSS3 and dubstep",
- "22": "Green peace",
- "23": "Bootstrap and dubstep",
- "24": "Twig with Befunge",
- "25": "git for humans",
- "26": "Backbone.js in 140 characters",
- "27": "Backbone.js with Autotune",
- "28": "Lisp and chocolate",
- "29": "Audio + git = awesome",
- "30": "Lisp and dubstep"
+ "1": {
+  "name": "Bootstrap + Monads = awesome",
+  "minStudents": 3,
+  "maxStudents": 4,
+  "skills": []
+ },
+ "2": {
+  "name": "Lisp FTW",
+  "minStudents": 3,
+  "maxStudents": 4,
+  "skills": []
+ },
+ "3": {
+  "name": "memcached with Autotune",
+  "minStudents": 3,
+  "maxStudents": 3,
+  "skills": []
+ },
+ "4": {
+  "name": "Monads and chocolate",
+  "minStudents": 3,
+  "maxStudents": 4,
+  "skills": []
+ },
+ "5": {
+  "name": "Bootstrap with Befunge",
+  "minStudents": 3,
+  "maxStudents": 4,
+  "skills": []
+ },
+ "6": {
+  "name": "Haskell with chocolate",
+  "minStudents": 3,
+  "maxStudents": 3,
+  "skills": []
+ },
+ "7": {
+  "name": "Monads FTW",
+  "minStudents": 3,
+  "maxStudents": 4,
+  "skills": []
+ },
+ "8": {
+  "name": "git for zombies",
+  "minStudents": 3,
+  "maxStudents": 4,
+  "skills": []
+ },
+ "9": {
+  "name": "Clojure FTW",
+  "minStudents": 3,
+  "maxStudents": 3,
+  "skills": []
+ },
+ "10": {
+  "name": "Mashups in 140 characters",
+  "minStudents": 3,
+  "maxStudents": 4,
+  "skills": []
+ },
+ "11": {
+  "name": "Lisp and bacon",
+  "minStudents": 3,
+  "maxStudents": 4,
+  "skills": []
+ },
+ "12": {
+  "name": "Monads + jQuery = awesome",
+  "minStudents": 3,
+  "maxStudents": 3,
+  "skills": []
+ },
+ "13": {
+  "name": "Haskell and Autotune",
+  "minStudents": 3,
+  "maxStudents": 4,
+  "skills": []
+ },
+ "14": {
+  "name": "CSS3 + Lisp = awesome",
+  "minStudents": 3,
+  "maxStudents": 4,
+  "skills": []
+ },
+ "15": {
+  "name": "CoffeeScript in 140 characters",
+  "minStudents": 3,
+  "maxStudents": 3,
+  "skills": []
+ },
+ "16": {
+  "name": "Mashups and dubstep",
+  "minStudents": 3,
+  "maxStudents": 4,
+  "skills": []
+ },
+ "17": {
+  "name": "git and Befunge",
+  "minStudents": 3,
+  "maxStudents": 4,
+  "skills": []
+ },
+ "18": {
+  "name": "Lisp and Befunge",
+  "minStudents": 3,
+  "maxStudents": 3,
+  "skills": []
+ },
+ "19": {
+  "name": "Bootstrap with dubstep",
+  "minStudents": 3,
+  "maxStudents": 4,
+  "skills": []
+ },
+ "20": {
+  "name": "jQuery with Befunge",
+  "minStudents": 3,
+  "maxStudents": 4,
+  "skills": []
+ },
+ "21": {
+  "name": "CSS3 and dubstep",
+  "minStudents": 3,
+  "maxStudents": 3,
+  "skills": []
+ },
+ "22": {
+  "name": "Green peace",
+  "minStudents": 3,
+  "maxStudents": 4,
+  "skills": []
+ },
+ "23": {
+  "name": "Bootstrap and dubstep",
+  "minStudents": 3,
+  "maxStudents": 4,
+  "skills": []
+ },
+ "24": {
+  "name": "Twig with Befunge",
+  "minStudents": 3,
+  "maxStudents": 3,
+  "skills": []
+ },
+ "25": {
+  "name": "git for humans",
+  "minStudents": 3,
+  "maxStudents": 4,
+  "skills": []
+ },
+ "26": {
+  "name": "Backbone.js in 140 characters",
+  "minStudents": 3,
+  "maxStudents": 4,
+  "skills": []
+ },
+ "27": {
+  "name": "Backbone.js with Autotune",
+  "minStudents": 3,
+  "maxStudents": 3,
+  "skills": []
+ },
+ "28": {
+  "name": "Lisp and chocolate",
+  "minStudents": 3,
+  "maxStudents": 4,
+  "skills": []
+ },
+ "29": {
+  "name": "Audio + git = awesome",
+  "minStudents": 3,
+  "maxStudents": 4,
+  "skills": []
+ },
+ "30": {
+  "name": "Lisp and dubstep",
+  "minStudents": 3,
+  "maxStudents": 3,
+  "skills": []
+ }
 }
