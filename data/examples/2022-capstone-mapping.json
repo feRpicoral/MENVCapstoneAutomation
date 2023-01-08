@@ -1,0 +1,296 @@
+{
+ "1": {
+  "name": "Boulder Watershed Collective",
+  "skills": [],
+  "minStudents": 3,
+  "maxStudents": 3
+ },
+ "2": {
+  "name": "City of Boulder/Urban Drawdown Initiative: Facilitating the Dissemination of Urban Natural Climate Solutions",
+  "skills": [],
+  "minStudents": 6,
+  "maxStudents": 8
+ },
+ "3": {
+  "name": "City of Boulder/Urban Drawdown Initiative: Managing Urban Landscapes for Climate Action Guide, Phase 2",
+  "skills": [],
+  "minStudents": 3,
+  "maxStudents": 4
+ },
+ "4": {
+  "name": "Colorado Energy Office: Colorado Electric Database and Online Portal",
+  "skills": [],
+  "minStudents": 3,
+  "maxStudents": 3
+ },
+ "5": {
+  "name": "Colorado Outdoors",
+  "skills": [],
+  "minStudents": 3,
+  "maxStudents": 3
+ },
+ "6": {
+  "name": "Conservation Lands Fund",
+  "skills": [],
+  "minStudents": 3,
+  "maxStudents": 3
+ },
+ "7": {
+  "name": "Danone: Ingredient Sustainability Assessment",
+  "skills": [],
+  "minStudents": 3,
+  "maxStudents": 4
+ },
+ "8": {
+  "name": "Danone: Localized Food Waste Strategy & Roadmaps for Sustainable Development Goal 12.3",
+  "skills": [],
+  "minStudents": 3,
+  "maxStudents": 3
+ },
+ "9": {
+  "name": "Dharma's Garden",
+  "skills": [],
+  "minStudents": 3,
+  "maxStudents": 3
+ },
+ "10": {
+  "name": "E Source",
+  "skills": [],
+  "minStudents": 3,
+  "maxStudents": 3
+ },
+ "11": {
+  "name": "EarthHero",
+  "skills": [],
+  "minStudents": 3,
+  "maxStudents": 3
+ },
+ "12": {
+  "name": "East Denver Food Hub",
+  "skills": [],
+  "minStudents": 3,
+  "maxStudents": 4
+ },
+ "13": {
+  "name": "Farm Collaborative",
+  "skills": [],
+  "minStudents": 3,
+  "maxStudents": 3
+ },
+ "14": {
+  "name": "Fetzer Vineyards",
+  "skills": [],
+  "minStudents": 3,
+  "maxStudents": 4
+ },
+ "15": {
+  "name": "Intelex",
+  "skills": [],
+  "minStudents": 3,
+  "maxStudents": 3
+ },
+ "16": {
+  "name": "Invenergy",
+  "skills": [],
+  "minStudents": 3,
+  "maxStudents": 4
+ },
+ "17": {
+  "name": "Lacy Consulting Services",
+  "skills": [],
+  "minStudents": 2,
+  "maxStudents": 2
+ },
+ "18": {
+  "name": "Leave No Trace",
+  "skills": [],
+  "minStudents": 3,
+  "maxStudents": 4
+ },
+ "19": {
+  "name": "Metro DNA/The Nature Conservancy",
+  "skills": [],
+  "minStudents": 3,
+  "maxStudents": 4
+ },
+ "20": {
+  "name": "National Renewable Energy Lab: Wind Community Planning and Equity",
+  "skills": [],
+  "minStudents": 2,
+  "maxStudents": 2
+ },
+ "21": {
+  "name": "National Renewable Energy Lab: Wind Energy Workforce Development",
+  "skills": [],
+  "minStudents": 1,
+  "maxStudents": 1
+ },
+ "22": {
+  "name": "Northwest Colorado Cultural Heritage Program",
+  "skills": [],
+  "minStudents": 3,
+  "maxStudents": 4
+ },
+ "23": {
+  "name": "Nourish Colorado: Advancing Equity for Farmers through Colorado State Policy",
+  "skills": [],
+  "minStudents": 3,
+  "maxStudents": 3
+ },
+ "24": {
+  "name": "OneEnergy",
+  "skills": [],
+  "minStudents": 3,
+  "maxStudents": 3
+ },
+ "25": {
+  "name": "Outside, Inc.",
+  "skills": [],
+  "minStudents": 3,
+  "maxStudents": 4
+ },
+ "26": {
+  "name": "Solidaridad",
+  "skills": [],
+  "minStudents": 3,
+  "maxStudents": 3
+ },
+ "27": {
+  "name": "US Forest Service",
+  "skills": [],
+  "minStudents": 3,
+  "maxStudents": 4
+ },
+ "28": {
+  "name": "Vail Resorts",
+  "skills": [],
+  "minStudents": 3,
+  "maxStudents": 4
+ },
+ "29": {
+  "name": "Western Resource Advocates",
+  "skills": [],
+  "minStudents": 3,
+  "maxStudents": 3
+ },
+ "30": {
+  "name": "Theodore Roosevelt Conservation Partnership",
+  "skills": [],
+  "minStudents": 3,
+  "maxStudents": 4
+ },
+ "31": {
+  "name": "Canyonlands Camps",
+  "skills": [],
+  "minStudents": 3,
+  "maxStudents": 4
+ },
+ "32": {
+  "name": "Center for Western Priorities",
+  "skills": [],
+  "minStudents": 3,
+  "maxStudents": 4
+ },
+ "33": {
+  "name": "Chaffee Recreation Council",
+  "skills": [],
+  "minStudents": 3,
+  "maxStudents": 4
+ },
+ "34": {
+  "name": "City of Westminster",
+  "skills": [],
+  "minStudents": 3,
+  "maxStudents": 4
+ },
+ "35": {
+  "name": "Colorado Blueprint to End Hunger",
+  "skills": [],
+  "minStudents": 3,
+  "maxStudents": 4
+ },
+ "36": {
+  "name": "Colorado Energy Office: Policy and Program Design Considerations for Medium and Heavy Duty Vehicle Charging and Hydrogen Fueling Infrastructure",
+  "skills": [],
+  "minStudents": 3,
+  "maxStudents": 4
+ },
+ "37": {
+  "name": "Denver Urban Gardens",
+  "skills": [],
+  "minStudents": 3,
+  "maxStudents": 4
+ },
+ "38": {
+  "name": "encoord",
+  "skills": [],
+  "minStudents": 3,
+  "maxStudents": 4
+ },
+ "39": {
+  "name": "Environmental Research and Education Foundation",
+  "skills": [],
+  "minStudents": 3,
+  "maxStudents": 4
+ },
+ "40": {
+  "name": "ICLEI",
+  "skills": [],
+  "minStudents": 3,
+  "maxStudents": 4
+ },
+ "41": {
+  "name": "iDE",
+  "skills": [],
+  "minStudents": 3,
+  "maxStudents": 4
+ },
+ "42": {
+  "name": "National Clean Up Day",
+  "skills": [],
+  "minStudents": 3,
+  "maxStudents": 4
+ },
+ "43": {
+  "name": "National Young Farmers Coalition",
+  "skills": [],
+  "minStudents": 3,
+  "maxStudents": 4
+ },
+ "44": {
+  "name": "Ocean First Institute",
+  "skills": [],
+  "minStudents": 3,
+  "maxStudents": 4
+ },
+ "45": {
+  "name": "Regional Air Quality Council",
+  "skills": [],
+  "minStudents": 3,
+  "maxStudents": 4
+ },
+ "46": {
+  "name": "Rocky Mountain National Park",
+  "skills": [],
+  "minStudents": 3,
+  "maxStudents": 4
+ },
+ "47": {
+  "name": "The Table",
+  "skills": [],
+  "minStudents": 3,
+  "maxStudents": 4
+ },
+ "48": {
+  "name": "University of Colorado Boulder: Supporting the Development of an Updated University of Colorado Boulder Climate Action Plan",
+  "skills": [],
+  "minStudents": 3,
+  "maxStudents": 4
+ },
+ "49": {
+  "name": "WaterNow Alliance",
+  "skills": [],
+  "minStudents": 3,
+  "maxStudents": 4
+ }
+}

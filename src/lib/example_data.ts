@@ -59,3 +59,15 @@ export async function test_example1(){
 	console.log(students)
 	return {"students":students, "capstones": capstones}
 }
+
+
+export async function test_solver_2022(){
+	var content = fs.readFileSync("data/examples/2022-capstone-mapping.json", {encoding: 'utf-8'})
+	var capstones = JSON.parse(content)
+	var students = fs.readFileSync("data/examples/2022-student-mapping.json", {encoding: 'utf-8'})
+	students = JSON.parse(students)
+	console.log("Printing students")
+	console.log(students)
+	return {"students":students, "capstones": capstones}
+
+}

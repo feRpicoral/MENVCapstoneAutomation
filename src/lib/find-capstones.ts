@@ -206,27 +206,3 @@ export async function test_example2(){
 	return JSON.stringify(results);
 
 }
-
-export async function test_solver_2022(){
-	var content = fs.readFileSync("public/model-2022.json", {encoding: 'utf-8'})
-	var data = JSON.parse(content)
-	var model = data["model"]
-	var num_students = data["num_students"]
-	var num_capstones = data["num_capstones"]
-
-
-	var content2 = fs.readFileSync("public/2022-preferences.json", {encoding: 'utf-8'})
-	var data2 = JSON.parse(content2)
-	var student_preferences = data2["student_preferences"]
-	// var model = model_from_preferences(student_preferences, num_students, num_capstones);
-
-	console.log(JSON.stringify(model))
-
-	var results = await solver.Solve(model);
-	var result_pref = find_distribution(results, student_preferences)
-
-	console.log(results);
-	console.log(result_pref);
-
-	return JSON.stringify(results);
-}
