@@ -120,6 +120,12 @@ export function set_model_variables(model, students: StudentMap, capstones: Caps
 			model["variables"][`student-${s}-capstone-${c}`][`student-${s}`] = 1
 			// capstone_ids.forEach(key => model["variables"][`student-${s}-capstone-${c}`][`capstone-${key}`] = 0);
 			model["variables"][`student-${s}-capstone-${c}`][`capstone-${c}`] = 1
+			const left_skills = capstones[c].skills.filter(value => students[s].skills.includes(value) == false);
+			if (left_skills.length > 0 ){
+				// There are some skills needed by the capstone, that the student doesn't have.
+				// Dont allow the student to be placed in that capstone.
+				model["constraints"][`student-${s}-capstone-${c}`] = {"equal":0}
+			}
 
 		}
 	}
@@ -174,12 +180,6 @@ export function find_distribution(results, students: StudentMap){
 	return result_pref
 
 }
-
-
-
-
-
-
 
 
 export async function test_example2(){
