@@ -53,6 +53,19 @@ export function get_example2_results(){
 
 }
 
+export function get_2022_results(){
+	var r = fs.readFileSync("data/examples/2022-results.json", {encoding: 'utf-8'})
+	r = JSON.parse(r)
+	var s = fs.readFileSync("data/examples/2022-student-mapping.json", {encoding: 'utf-8'})
+	s = JSON.parse(s)
+	var c = fs.readFileSync("data/examples/2022-capstone-mapping.json", {encoding: 'utf-8'})
+	c = JSON.parse(c)
+
+	
+	return parse_results(r, c, s)
+
+}
+
 function get_logical_results(results, student_mapping: StudentMap, capstone_mapping: CapstoneMap){
     var logical_result = {};
     for (const [key, value] of Object.entries(results)) {
