@@ -1,5 +1,5 @@
 import React from 'react'
-import { get_example_results } from '../../lib/fetch-results.ts'
+import { get_2022_results } from 'src/lib/fetch-results'
 import {ResultsComponent} from 'src/components/results/resultsComp'
 
 export default function Page({parsed_results}){
@@ -13,7 +13,7 @@ export default function Page({parsed_results}){
 
 export async function getServerSideProps(context) {
   
-  const parsed_results = await get_example_results()
+  const parsed_results = await get_2022_results()
 
   return {
     props: {
