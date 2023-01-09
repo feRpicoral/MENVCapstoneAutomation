@@ -1,8 +1,6 @@
 import {useLocalStorage} from "../lib/localStorage";
 import {CapstoneProject} from "../lib/capstoneData";
 import {useState} from "react";
-import {batchUpdate as updateForm, create as createForm} from "../lib/googleFormsApi";
-import {Option, Request} from "../lib/googleFormsInterface"
 import {
     Box,
     Button,
@@ -19,6 +17,7 @@ import {DATA_SHEET_TITLE, TOKEN_INVALID} from "../lib/constants";
 import {LoginPrompt} from "../components/LoginPrompt";
 import {TitleBar} from "../components/TitleBar";
 import {createSpreadsheet, setValues} from "../lib/googleSheetsApi";
+import {createForm} from "../lib/exportData";
 
 export default function Form() {
     const [projects] = useLocalStorage<CapstoneProject[]>('menv-capstone-creation', [])
@@ -36,75 +35,8 @@ export default function Form() {
 
     const {accessToken} = useGlobalState()
 
-    function collectSkills() {
-        let skills = []
-        projects.forEach(p => p.requiredSkills.forEach(s => skills.push(s)))
-        return skills
-    }
-
     function createGoogleForm() {
-        let descriptions: Request[] = includeDescriptions ? projects.reverse().map(p => ({
-            createItem: {
-                item: {
-                    title: p.projectTitle, description: p.projectDescription, textItem: {}
-                }, location: {
-                    index: 0
-                }
-            }
-        })) : []
-        let skills = collectSkills()
-        let skillCheck: Request = {
-            createItem: {
-                item: {
-                    title: "Please select your applicable skills.", questionItem: {
-                        question: {
-                            required: true, choiceQuestion: {
-                                options: skills.map(s => ({
-                                    value: s
-                                })), type: "CHECKBOX"
-                            }
-                        }
-                    }
-                }, location: {
-                    index: 0
-                }
-            }
-        }
-        let options: Option[] = projects.map(proj => ({
-            value: proj.projectTitle,
-        }))
-        let projectSelection: Request[] = [...Array(5).keys()].map(n => ({
-            createItem: {
-                item: {
-                    title: `Preference ${n + 1}`, questionItem: {
-                        question: {
-                            required: true, choiceQuestion: {
-                                options: options, type: "DROP_DOWN"
-                            }
-                        }
-                    }
-                }, location: {
-                    index: 0
-                }
-            }
-        }))
-        setFormWaiting(true)
-        createForm(accessToken, {
-            title: formName != '' ? formName : 'MENV Capstone Initial Preferences',
-            documentTitle: fileName != '' ? fileName : 'MENV Capstone Initial Preferences',
-        }).then(form => {
-            updateForm(accessToken, form.formId!, {
-                requests: [...projectSelection.reverse(), skillCheck, ...descriptions], includeFormInResponse: true,
-            }).then(res => {
-                setFormId(res.form.formId!);
-                setFormSuccess(true)
-                setFormWaiting(false)
-            }).catch(e => {
-                window.alert(e)
-                console.log(e)
-                setFormWaiting(false)
-            })
-        }).catch(window.alert).catch(console.log)
+        createForm(accessToken, includeDescriptions, projects, formName, fileName, setFormWaiting, setFormSuccess, setFormId)
     }
 
     function exportToSheet() {
