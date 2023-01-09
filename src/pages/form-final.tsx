@@ -2,13 +2,24 @@ import {useEffect, useState} from "react";
 import useDrivePicker from "react-google-drive-picker";
 import {useGlobalState} from "../components/GlobalContextProvider";
 import {TitleBar} from "../components/TitleBar";
-import {Box, Button, Stack, Typography} from "@mui/material";
+import {
+    Box,
+    Button,
+    CircularProgress,
+    FormControlLabel,
+    FormGroup,
+    Stack,
+    Switch,
+    TextField,
+    Typography
+} from "@mui/material";
 import {LoginPrompt} from "../components/LoginPrompt";
 import {getForm, listResponses} from "../lib/googleFormsApi";
 import {Form, FormResponse} from "../lib/googleFormsInterface";
 import {CapstoneProject} from "../lib/capstoneData";
 import {getValues} from "../lib/googleSheetsApi";
 import {DATA_SHEET_TITLE} from "../lib/constants";
+import {createForm} from "../lib/exportData";
 
 
 type Student = {
@@ -28,6 +39,16 @@ export default function FormFinal() {
     const [formObject, setFormObject] = useState<Form>()
     const [preferences, setPreferences] = useState<Student[]>()
 
+    const [algoState, setAlgoState] = useState<'WAITING' | 'RUNNING' | 'DONE'>('WAITING')
+
+    const [formName, setFormName] = useState('')
+    const [fileName, setFileName] = useState('')
+    const [includeDescriptions, setIncludeDescriptions] = useState(true)
+
+    const [formWaiting, setFormWaiting] = useState(false)
+    const [formSuccess, setFormSuccess] = useState(false)
+    const [createdFormId, setNewFormId] = useState('')
+
     useEffect(() => {
         if (formId == '') return
         getForm(accessToken, formId).then(res => setFormObject(res))
@@ -38,15 +59,15 @@ export default function FormFinal() {
         if (sheetId == '') return
         getValues(accessToken, sheetId, DATA_SHEET_TITLE, 'A2:Z1000').then(rows => setProjects(rows.map(row => ({
             projectTitle: row[0],
-            projectDescription: row[1],
-            partner: row[2],
-            contactName: row[3],
-            email: row[4],
-            phone: row[5],
+            projectDescription: row[1] ?? '',
+            partner: row[2] ?? '',
+            contactName: row[3] ?? '',
+            email: row[4] ?? '',
+            phone: row[5] ?? '',
             minStudents: parseInt(row[6]),
             maxStudents: parseInt(row[7]),
-            requiredSkills: row[8]?.split(';;'),
-            compensation: row[9]
+            requiredSkills: row[8]?.split(';;') ?? [],
+            compensation: row[9] ?? ''
         })))).catch(console.log)
     }, [sheetId])
 
@@ -110,6 +131,16 @@ export default function FormFinal() {
         })
     }
 
+    function createGoogleForm() {
+        createForm(accessToken, includeDescriptions, projects, formName, fileName, setFormWaiting, setFormSuccess, setNewFormId)
+    }
+
+    function eliminateProjects() {
+        setAlgoState('RUNNING')
+        // RUN ALGO TO ELIMINATE
+        setAlgoState('DONE')
+    }
+
     const ChooseFiles = (props) => {
         if (formId == '') return (
             <Button variant='contained' color='primary' onClick={chooseForm}>Choose form to gather responses</Button>
@@ -136,7 +167,36 @@ export default function FormFinal() {
                                 <Typography variant='body1'>Nobody has responded to the Google Form yet.</Typography>}
                             {responses.length > 0 &&
                                 <Typography variant='body1'>{responses.length} responses</Typography>}
-                            <Button variant='contained'>Run algorithm to eliminate projects</Button>
+                            <Button variant='contained' onClick={eliminateProjects} disabled={algoState != 'WAITING'}>
+                                {algoState != 'RUNNING' ? 'Run algorithm to eliminate projects' : <CircularProgress/>}
+                            </Button>
+                            {algoState == 'DONE' &&
+                                <>
+                                    <TextField label='Form name'
+                                               helperText='This will be displayed at the top of the form'
+                                               value={formName} onChange={e => setFormName(e.target.value)}></TextField>
+                                    <TextField label='File name'
+                                               helperText='This will be the name of the file as seen in Google Drive'
+                                               value={fileName} onChange={e => setFileName(e.target.value)}></TextField>
+                                    <FormGroup>
+                                        <FormControlLabel control={
+                                            <Switch checked={includeDescriptions}
+                                                    onChange={e => setIncludeDescriptions(e.target.checked)}
+                                                    inputProps={{'aria-label': 'controlled'}}/>
+                                        } label='Include project titles and descriptions at top of form for reference'/>
+                                    </FormGroup>
+                                    <Button size='large' variant='contained' color='primary'
+                                            disabled={formWaiting || formSuccess}
+                                            onClick={createGoogleForm}>{formWaiting ?
+                                        <CircularProgress/> : 'Create form'}</Button>
+                                    {formSuccess && <Typography variant='body1'>Form was created successfully,
+                                        <a target="_blank"
+                                           href={`https://docs.google.com/forms/d/${createdFormId}/edit`}>
+                                            click to view and edit
+                                        </a>
+                                    </Typography>}
+                                </>
+                            }
                         </ChooseFiles>
                     </LoginPrompt>
                 </Stack>
