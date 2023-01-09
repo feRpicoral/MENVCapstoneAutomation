@@ -9,6 +9,38 @@ function collectSkills(projects: CapstoneProject[]) {
 }
 
 export function createForm(accessToken: string, includeDescriptions: boolean, projects: CapstoneProject[], formName: string, fileName: string, setFormWaiting: Function, setFormSuccess: Function, setFormId: Function) {
+    let firstName: Request = {
+        createItem: {
+            item: {
+                title: "First Name",
+                questionItem: {
+                    question: {
+                        required: true,
+                        textQuestion: {}
+                    }
+                }
+            },
+            location: {
+                index: 0
+            }
+        }
+    }
+    let lastName: Request = {
+        createItem: {
+            item: {
+                title: "Last Name",
+                questionItem: {
+                    question: {
+                        required: true,
+                        textQuestion: {}
+                    }
+                }
+            },
+            location: {
+                index: 0
+            }
+        }
+    }
     let descriptions: Request[] = includeDescriptions ? projects.reverse().map(p => ({
         createItem: {
             item: {
@@ -60,7 +92,7 @@ export function createForm(accessToken: string, includeDescriptions: boolean, pr
         documentTitle: fileName != '' ? fileName : 'MENV Capstone Preferences',
     }).then(form => {
         updateForm(accessToken, form.formId!, {
-            requests: [...projectSelection.reverse(), skillCheck, ...descriptions], includeFormInResponse: true,
+            requests: [...projectSelection.reverse(), skillCheck, ...descriptions, lastName, firstName], includeFormInResponse: true,
         }).then(res => {
             setFormId(res.form.formId!);
             setFormSuccess(true)
