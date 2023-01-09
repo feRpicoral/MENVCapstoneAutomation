@@ -2,7 +2,7 @@ import {Button, Stack, Typography} from "@mui/material";
 import {useGlobalState} from "./GlobalContextProvider";
 import {TOKEN_INVALID} from "../lib/constants";
 
-export const LoginPrompt = () => {
+export const LoginPrompt = (props) => {
     const state = useGlobalState()
 
     if (state.accessToken == TOKEN_INVALID) {
@@ -14,9 +14,12 @@ export const LoginPrompt = () => {
         )
     }
     return (
-        <Button variant='contained' onClick={() => {
-            google.accounts.oauth2.revoke(state.accessToken, () => {})
-            state.setAccessToken(TOKEN_INVALID)
-        }}>Log out</Button>
+        <>
+            <Button variant='contained' onClick={() => {
+                google.accounts.oauth2.revoke(state.accessToken, () => {})
+                state.setAccessToken(TOKEN_INVALID)
+            }}>Log out</Button>
+            {props.children}
+        </>
     )
 }
