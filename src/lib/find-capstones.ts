@@ -90,7 +90,7 @@ export function simplify_capstones(capstones: CapstoneMap, students: StudentMap)
 
 	console.log("Started with " + capstones_size + " removed " + (capstones_size - Object.entries(r).length));
 
-	return r;
+	return {capstones: r, dropped};
 }
 
 

@@ -4,8 +4,10 @@ const { performance } = require('perf_hooks');
 var solver = require("javascript-lp-solver/src/solver")
 
 
-export async function run_model(s: StudentMap, c: CapstoneMap, allowDrop: boolean = true): Result{
+export async function run_model(s: StudentMap, c_raw: CapstoneMap, allowDrop: boolean = true): Result{
 	console.log("creating model")	
+	const dropped = simplify_capstones(c_raw, s);
+	const c = dropped.capstones;
 	var model = init_model(s, c, allowDrop)
 	model = set_model_variables(model, s, c)
 	console.log("Running model")
@@ -18,7 +20,6 @@ export async function run_model(s: StudentMap, c: CapstoneMap, allowDrop: boolea
 	var endTime = performance.now()
 
 	console.log(`Took ${(endTime - startTime)/1000} seconds`)
-	
 
 	return results
 }
