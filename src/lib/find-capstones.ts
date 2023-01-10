@@ -51,6 +51,48 @@ function getCost(preference_number: int): int{
 // 	}
 // }
 
+export function simplify_capstones(capstones: CapstoneMap, students: StudentMap){ //drop unpopular capstones
+	var interest_unsorted = [];
+	var capacity = 0;
+	const capstones_size = Object.entries(capstones).length;
+	const interest_weighting = [100, 50, 20, 10, 1]; //number of popularity points based on student preference #
+
+	interest_unsorted.push({capstone_number: 0, max: 0, interest: 0}); //capstone # starts at 1, entry removed after push
+	for (const[c, capstone] of Object.entries(capstones)) {
+		interest_unsorted.push({capstone_number: c, name: capstone.name, max: capstone.maxStudents, interest: 0});
+		capacity += capstone.maxStudents;
+	}
+	for (let c = 1; c < capstones_size+1; c++){
+		for (const [s, student] of Object.entries(students)){
+			interest_unsorted[c].interest += student.preferences[c] == undefined ? 0 : interest_weighting[student.preferences[c]-1];
+		}
+	}
+	interest_unsorted.shift(); //remove dummy node
+
+	let interest = interest_unsorted.sort((c1, c2) => (c1.interest > c2.interest) ? 1 : (c1.interest < c2.interest) ? -1 : 0)
+	
+	const students_size = Object.entries(students).length;
+	var dropped = []
+
+	while(capacity - interest[0].max >= students_size + (3*4)){ //remove as many capstones as possible, leave 3 unpopular capstones
+		capacity -= interest[0].max;
+		dropped.push({num: interest[0].capstone_number, name: interest[0].name});
+		interest.shift();
+	}
+	//console.log(interest);
+	//console.log(dropped);
+
+	var r: CapstoneMap = {};
+
+	interest.map((capstone_element, i) => {
+		r[i+1] = capstones[capstone_element.capstone_number];
+	});
+
+	console.log("Started with " + capstones_size + " removed " + (capstones_size - Object.entries(r).length));
+
+	return r;
+}
+
 
 export function init_model(students: StudentMap, capstones: CapstoneMap, allowDrop: boolean = true){
 	var model = {};
