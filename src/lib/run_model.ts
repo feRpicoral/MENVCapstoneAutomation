@@ -5,10 +5,16 @@ var solver = require("javascript-lp-solver/src/solver")
 
 
 export async function run_model(s: StudentMap, c: CapstoneMap, allowDrop: boolean = true): Result{
-	console.log("creating model")	
+	// console.log("Students:")
+	// console.log(s)
+
+	// console.log("Capstones:")
+	// console.log(c)
+
+	console.log("Creating model")	
 	var model = init_model(s, c, allowDrop)
 	model = set_model_variables(model, s, c)
-	console.log("RUnning model")
+	console.log("Running model")
 	// console.log(model)
 	var startTime = performance.now()
 

@@ -15,9 +15,10 @@ export default function Page({results}){
 
 export async function getServerSideProps(context) {
   
-  var num_students = 100
-  var num_capstones = 55
-  const ret = get_random_case(num_students, num_capstones)
+  var num_students = 10
+  var num_capstones = 5
+  var num_skills = 0
+  const ret = get_random_case(num_students, num_capstones, num_skills)
   // console.log(ret)
   let students = ret["students"]
   let capstones = ret["capstones"]

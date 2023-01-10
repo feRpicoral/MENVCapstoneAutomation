@@ -2,7 +2,7 @@ import {SkillMap, CapstoneMap, StudentMap, Student, Capstone} from 'src/lib/mode
 var fs = require('fs')
 var path = require('path')
 
-function get_random_students(num_students: int, num_capstones: int): StudentMap{
+function get_random_students(num_students: int, num_capstones: int, skills: SkillMap): StudentMap{
 	var student_preferences = {};
 	for (var s = 1; s <= num_students; s++){
 		student_preferences[s] = {}
@@ -16,11 +16,18 @@ function get_random_students(num_students: int, num_capstones: int): StudentMap{
 			student_preferences[s][capstone] = pref
 		}
 	}
+	
+	var all_skills = Object.keys(skills)
 
 	let sm: StudentMap = {};
 	for (var s = 1; s <= num_students; s++){
+		var num_skills = Math.floor(Math.random() * all_skills.length);
+		var sk = [];
+		for (var i = 0;i< num_skills;i++)
+			sk.push(all_skills[i])
+
 		// TODO: Create a random name
-		let ss:Student = {"name":`stud-${s}`, "preferences": student_preferences[s]}
+		let ss:Student = {"name":`stud-${s}`, "preferences": student_preferences[s], "skills":sk}
 		sm[s] = ss
 	}
 
@@ -28,11 +35,16 @@ function get_random_students(num_students: int, num_capstones: int): StudentMap{
 	return sm
 }
 
-function get_random_capstones(num_capstones: int): CapstoneMap {
+function get_random_capstones(num_capstones: int, skills: SkillMap): CapstoneMap {
 	let cm: CapstoneMap = {};
+	var all_skills = Object.keys(skills)
 	for(var c = 1; c <= num_capstones; c++){
 		// TODO: Create a random capstone
-		let cap:Capstone = {"name": `capstone-${c}`, "skills":[], "minStudents":3, "maxStudents":4}
+		var num_skills = Math.floor(Math.random() * all_skills.length);
+		var sk = [];
+		for (var i = 0;i< num_skills;i++)
+			sk.push(all_skills[i])
+		let cap:Capstone = {"name": `capstone-${c}`, "skills":sk, "minStudents":3, "maxStudents":4}
 		cm[c] = cap;
 	}
 
@@ -40,10 +52,19 @@ function get_random_capstones(num_capstones: int): CapstoneMap {
 
 }
 
+function get_random_skills(num_skills: int): SkillMap {
+	let sm:SkillMap = {};
+	for(var sk = 1; sk<= num_skills;sk++){
+		sm[sk] = `skill-${sk}`
+	}
+	return sm
+}
 
-export function get_random_case(num_students: int, num_capstones: int){
-	let students:StudentMap = get_random_students(num_students, num_capstones)
-	let capstones:CapstoneMap = get_random_capstones(num_capstones)
+
+export function get_random_case(num_students: int, num_capstones: int, num_skills:int = 0){
+	let skills:SkillMap = get_random_skills(num_skills)
+	let students:StudentMap = get_random_students(num_students, num_capstones, skills)
+	let capstones:CapstoneMap = get_random_capstones(num_capstones, skills)
 
 	return {"students":students, "capstones": capstones}
 }
