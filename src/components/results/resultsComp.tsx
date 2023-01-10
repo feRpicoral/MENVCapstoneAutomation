@@ -41,6 +41,9 @@ export function ResultsComponent(props){
   return (
       
       <div> 
+      <center>  
+        <h1 >Results</h1>
+      </center>
         
         <h2> Statistics</h2>
         <div style={{ width: '45%'}}>
